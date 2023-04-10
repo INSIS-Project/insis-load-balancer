@@ -7,6 +7,18 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+      - id: insis-product-command
+        uri: lb://insis-product-command
+        predicates:
+        - Method=POST,PUT,PATCH,DELETE
+        - Path=/products/**
+
+      - id: insis-product-query
+        uri: lb://insis-product-query
+        predicates:
+        - Method=GET
+        - Path=/products/**
 
 server:
   port: 8080
@@ -16,4 +28,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
